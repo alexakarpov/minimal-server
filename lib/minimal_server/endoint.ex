@@ -6,7 +6,7 @@ defmodule MinimalServer.Endpoint do
   IO.puts "after plug(:match)"
 
   # now where do I put this?
-  forward(“/bot”, to: MinimalServer.Router) $ #does position matter?
+  forward("/bot", to: MinimalServer.Router) #does position matter?
 
   plug(Plug.Parsers,
     parsers: [:json],
