@@ -16,6 +16,7 @@ defmodule MinimalServer.Application do
     
     # List all child processes to be supervised
     children = [
+      MinimalServer.Endpoint
       # Starts a worker by calling: MinimalServer.Worker.start_link(arg)
       # {MinimalServer.Worker, arg}
     ]
