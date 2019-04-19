@@ -21,8 +21,9 @@ defmodule MinimalServer.Router do
       text: "Hello from BOT :)"
     }
   end
-  IO.puts "ohai from #{ __ENV__.file} at #{__ENV__.line}"
+  IO.puts "end of #{ __ENV__.file}:#{__ENV__.line}"
 end
+
 
 # defmodule MinimalServer.Router do
 #   use Plug.Router
