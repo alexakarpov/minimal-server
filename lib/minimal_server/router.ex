@@ -1,4 +1,4 @@
-# OH COME ON! The Endpoint and Router are just fancy names! The real difference is Endpoint module is a child of a Supervised Application. For example, this "Router" directly serves a request.
+# The Endpoint and Router are just fancy names. The real difference is Endpoint module is a child of a Supervised Application. For example, this "Router" directly serves requests.
 
 defmodule MinimalServer.Router do
   use Plug.Router

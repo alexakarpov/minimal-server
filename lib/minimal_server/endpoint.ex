@@ -1,5 +1,5 @@
 defmodule MinimalServer.Endpoint do
-  use Plug.Router
+  use Plug.Router # same as Router module, lol
 
   #note: this is a child of a Supervised application
   
