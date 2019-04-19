@@ -5,6 +5,9 @@ defmodule MinimalServer.Router do
   plug(:match)
   plug(:dispatch)
 
+
+  IO.puts "ohai from #{ __ENV__.file} at #{__ENV__.line}"
+
   get "/" do
     conn
     |> put_resp_content_type("application/json")
@@ -13,10 +16,12 @@ defmodule MinimalServer.Router do
 
   defp message do
     %{
+      doo: (IO.puts "hi from inside of a fun #{ __ENV__.file} at #{__ENV__.line}; this will print on every request made"),
       response_type: "in_channel",
       text: "Hello from BOT :)"
     }
   end
+  IO.puts "ohai from #{ __ENV__.file} at #{__ENV__.line}"
 end
 
 # defmodule MinimalServer.Router do

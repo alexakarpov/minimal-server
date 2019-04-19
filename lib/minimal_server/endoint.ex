@@ -1,9 +1,8 @@
 defmodule MinimalServer.Endpoint do
   use Plug.Router
 
-  IO.puts "before plug(:match)" # executed once on launch
+  IO.puts "ohai from #{ __ENV__.file} at #{__ENV__.line}"
   plug(:match)
-  IO.puts "after plug(:match)" # executed once on launch
 
   # now where do I put this?
   forward("/bot", to: MinimalServer.Router) #does position matter?
@@ -16,9 +15,8 @@ defmodule MinimalServer.Endpoint do
 
   plug(:dispatch)
 
-  IO.puts "ohai" # same as above, executed on compile =) compile is automatically done on mix run, if needed (files changed)
   match _ do
-    IO.puts "hello" # not executed?
+    IO.puts "ohai from INSIDE #{ __ENV__.file} at #{__ENV__.line}"
     send_resp(conn, 404, "Requested page not found!")
   end
 
@@ -32,5 +30,5 @@ defmodule MinimalServer.Endpoint do
   def start_link(_opts) do
     Plug.Cowboy.http(__MODULE__, [])
   end
-
+  IO.puts "ohai from #{ __ENV__.file} at #{__ENV__.line}"
 end
