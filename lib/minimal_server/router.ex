@@ -1,3 +1,4 @@
+# OH COME ON! The Endpoint and Router are just fancy names! The real difference is Endpoint module is a child of a Supervised Application.
 
 defmodule MinimalServer.Router do
   use Plug.Router
@@ -5,8 +6,7 @@ defmodule MinimalServer.Router do
   plug(:match)
   plug(:dispatch)
 
-
-  IO.puts "ohai from #{ __ENV__.file} at #{__ENV__.line}"
+  IO.puts "beginning of #{ __ENV__.file}:#{__ENV__.line}"
 
   get "/" do
     conn
@@ -16,37 +16,10 @@ defmodule MinimalServer.Router do
 
   defp message do
     %{
-      doo: (IO.puts "hi from inside of a fun #{ __ENV__.file} at #{__ENV__.line}; this will print on every request made"),
+      doo: (IO.puts "hi from inside of a fun #{ __ENV__.file}:#{__ENV__.line}; prints on every request served"),
       response_type: "in_channel",
       text: "Hello from BOT :)"
     }
   end
   IO.puts "end of #{ __ENV__.file}:#{__ENV__.line}"
 end
-
-
-# defmodule MinimalServer.Router do
-#   use Plug.Router
-
-#   plug(:match)
-#   plug(:dispatch)
-
-#   @content_type "application/json"
-
-#   get "/" do
-#     conn
-#     |> put_resp_content_type(@content_type)
-#     |> send_resp(200, message())
-#   end
-
-#   match _ do
-#     send_resp(conn, 404, "Requested page not found!")
-#   end
-
-#   defp message do
-#     Poison.encode!(%{
-#           response_type: "in_channel",
-#           text: "Hello from BOT :)"
-#                    })
-#   end
-# end

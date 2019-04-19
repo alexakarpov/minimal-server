@@ -1,7 +1,11 @@
 defmodule MinimalServer.Endpoint do
   use Plug.Router
 
-  IO.puts "at the root of #{ __ENV__.file}:#{__ENV__.line} - this will print once on COMPILE (which may coincide with 'mix run..')"
+  #OK, so this module is a child of a Supervised application
+  
+  # any change to this file will cause only this module to recompile - while Router change will cause both modules to recompile, because this Endpoint module here depends on Router module
+  IO.puts "at the root of #{ __ENV__.file}:#{__ENV__.line}"
+
   plug(:match)
 
   plug(Plug.Parsers,
@@ -14,13 +18,19 @@ defmodule MinimalServer.Endpoint do
 
   plug(:dispatch)
 
-
-  # this forward must precede the next clause, otherwise:
+  # this forward ( nothing to do with 302) must precede the next clause, otherwise:
   # warning: this clause cannot match because a previous clause at line 17 always matches
-  forward("/bot", to: MinimalServer.Router) #does position matter?
+  forward("/bot", to: MinimalServer.Router) # dependency
+  # .. but what if we had more than 1?
+
+  get "/hello" do
+    # .. lol,sure!
+    IO.puts "hello - at #{ __ENV__.file}:#{__ENV__.line}"
+    send_resp(conn, 200, "world")
+  end
 
   match _ do
-    IO.puts "404 - INSIDE #{ __ENV__.file}:#{__ENV__.line}"
+    IO.puts "404 - at #{ __ENV__.file}:#{__ENV__.line}"
     send_resp(conn, 404, "Requested page not found!")
   end
 
