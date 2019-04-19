@@ -1,4 +1,4 @@
-# OH COME ON! The Endpoint and Router are just fancy names! The real difference is Endpoint module is a child of a Supervised Application.
+# OH COME ON! The Endpoint and Router are just fancy names! The real difference is Endpoint module is a child of a Supervised Application. For example, this "Router" directly serves a request.
 
 defmodule MinimalServer.Router do
   use Plug.Router
@@ -16,7 +16,9 @@ defmodule MinimalServer.Router do
 
   defp message do
     %{
-      doo: (IO.puts "hi from inside of a fun #{ __ENV__.file}:#{__ENV__.line}; prints on every request served"),
+      # yeah makes sense - every req routed here will cause this fun to be called.
+      #time: :calendar.universal_time(),
+      time: DateTime.utc_now(),
       response_type: "in_channel",
       text: "Hello from BOT :)"
     }
