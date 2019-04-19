@@ -29,6 +29,11 @@ defmodule MinimalServer.Endpoint do
     send_resp(conn, 200, "world")
   end
 
+  post "/events" do
+    IO.inspect conn.body_params # Prints JSON POST body
+    send_resp(conn, 200, "Success!")
+  end
+
   match _ do
     IO.puts "404 - at #{ __ENV__.file}:#{__ENV__.line}"
     send_resp(conn, 404, "Requested page not found!")
