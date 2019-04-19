@@ -30,7 +30,7 @@ defmodule MinimalServer.Endpoint do
   end
 
   def start_link(_opts) do
-    Plug.Adapters.Cowboy2.http(__MODULE__, [])
+    Plug.Cowboy.http(__MODULE__, [])
   end
 
 end
