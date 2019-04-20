@@ -1,2 +1,3 @@
 #!/bin/sh
-mix run --no-halt
+#mix run --no-halt
+iex -S mix run
