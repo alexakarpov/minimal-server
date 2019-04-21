@@ -8,9 +8,9 @@ defmodule MinimalServer.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      MinimalServer.Endpoint,
+      {MinimalServer.Endpoint, name: MS.Endpoint},
       Stack, # The same as {Stack, []}
-      MinimalServer.Machine
+      {MinimalServer.Machine, name: MS.Machine},
       # Starts a worker by calling: MinimalServer.Worker.start_link(arg)
       # {MinimalServer.Worker, arg}
     ]

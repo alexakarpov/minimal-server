@@ -15,20 +15,20 @@ defmodule MinimalServer.Machine do
   #   :ok
   # end
 
-  def start_link(state_in) do
-    IO.puts "#{__MODULE__}'s own bootstrap starting"
-    IO.inspect(state_in)
+  def start_link(opts) do
+    IO.puts "#{__MODULE__} ===> bootstrap (start_link/1)"
+    IO.inspect(opts)
     {:ok, journal} = File.open("journal", [:utf8, :write])
     IO.puts "journal now opened; calling GenServer.start_link/2 with"
     IO.inspect journal
-    GenServer.start_link(__MODULE__, journal, name: MinimalServer.Machine)
+    GenServer.start_link(__MODULE__, journal, name: MS.Machine)
   end
                        
   @doc """
   Generates and fires a CycleComplete message with given fields.
   """
   def complete_cycle(machine_id, timestamp) do
-    GenServer.call(MachineStateServer, %{"machine_id" => machine_id,
+    GenServer.call(MS.Machine, %{"machine_id" => machine_id,
                                          "type" => "CycleComplete",
                                          "timestamp" => timestamp})
   end
@@ -37,7 +37,7 @@ defmodule MinimalServer.Machine do
 
   @impl true
   def init(journal) do
-    IO.puts "#{__MODULE__} doing INIT"
+    IO.puts "#{__MODULE__} ===> INIT"
     {:ok, %{journal: journal,
             machines: %{}}}
   end
