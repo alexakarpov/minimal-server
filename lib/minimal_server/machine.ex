@@ -18,11 +18,10 @@ defmodule MinimalServer.Machine do
   def start_link(state_in) do
     IO.puts "#{__MODULE__}'s own bootstrap starting"
     IO.inspect(state_in)
-    # journal's just a file for now
-    {:ok, journal} = File.open("journal", [:write])
-    IO.puts "journal now opened; calling GenServer.start_link/2 with #{journal}"
+    {:ok, journal} = File.open("journal", [:utf8, :write])
+    IO.puts "journal now opened; calling GenServer.start_link/2 with"
+    IO.inspect journal
     GenServer.start_link(__MODULE__, journal, name: MinimalServer.Machine)
-    :ok
   end
                        
   @doc """
@@ -38,7 +37,7 @@ defmodule MinimalServer.Machine do
 
   @impl true
   def init(journal) do
-    IO.puts "#{__MODULE__} doing INIT with journal of #{journal}"
+    IO.puts "#{__MODULE__} doing INIT"
     {:ok, %{journal: journal,
             machines: %{}}}
   end
