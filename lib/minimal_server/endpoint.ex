@@ -4,7 +4,7 @@ defmodule MinimalServer.Endpoint do
   #note: this is a child of a Supervised application
   
   # any change to this file will cause only this module to recompile - while Router change will cause both modules to recompile, because this module here depends on Router module
-  IO.puts "at the root of #{ __ENV__.file}:#{__ENV__.line}"
+  IO.puts "#{__MODULE__}getting up; #{ __ENV__.file}:#{__ENV__.line}.."
 
   plug(:match)
 
