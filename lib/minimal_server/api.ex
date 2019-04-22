@@ -1,4 +1,4 @@
-defmodule MinimalServer.Endpoint do
+defmodule MinimalServer.API do
   use Plug.Router # same as Router module, lol
 
   plug(:match)
