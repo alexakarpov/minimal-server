@@ -1,11 +1,6 @@
 defmodule MinimalServer.Endpoint do
   use Plug.Router # same as Router module, lol
 
-  #note: this is a child of a Supervised application
-  
-  # any change to this file will cause only this module to recompile - while Router change will cause both modules to recompile, because this module here depends on Router module
-  IO.puts "#{__MODULE__}getting up; #{ __ENV__.file}:#{__ENV__.line}.."
-
   plug(:match)
 
   plug(Plug.Parsers,
@@ -21,21 +16,15 @@ defmodule MinimalServer.Endpoint do
   forward("/bot", to: MinimalServer.Router) # dependency
   # .. but what if we had more than 1?
 
-  get "/hello" do
-    # .. lol,sure!
-    IO.puts "hello - at #{ __ENV__.file}:#{__ENV__.line}"
-    send_resp(conn, 200, "world")
-  end
-
   post "/events" do
     IO.inspect conn
-    %{"hello" => msg, "number" => num} = conn.body_params
+    %{"machine_id" => id, "time" => time} = conn.body_params
+    MinimalServer.Machine.complete_cycle(id, time)
     send_resp(conn, 200, "POST success!")
   end
 
   match _ do
-    IO.puts "404 - at #{ __ENV__.file}:#{__ENV__.line}"
-    send_resp(conn, 404, "Requested page not found!")
+    send_resp(conn, 404, "Requested url not found!")
   end
 
   def child_spec(opts) do

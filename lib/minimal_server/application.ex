@@ -10,7 +10,7 @@ defmodule MinimalServer.Application do
     children = [
       {MinimalServer.Endpoint, name: MS.Endpoint},
       Stack, # The same as {Stack, []}
-      {MinimalServer.Machine, name: MS.Machine},
+      MinimalServer.Machine
       # Starts a worker by calling: MinimalServer.Worker.start_link(arg)
       # {MinimalServer.Worker, arg}
     ]

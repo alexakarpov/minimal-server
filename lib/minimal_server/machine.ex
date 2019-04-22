@@ -5,22 +5,11 @@ defmodule MinimalServer.Machine do
 
   ## Client API
 
-  # @doc """
-  # Starts a named MachineStateServer manually .
-  # """
-  # def start_my_server() do
-  #   # journals' just a file for now
-  #   {:ok, journal} = File.open("journal", [:write])
-  #   GenServer.start_link(__MODULE__, journal, name: MachineServer)
-  #   :ok
-  # end
-
   def start_link(opts) do
     IO.puts "#{__MODULE__} ===> bootstrap (start_link/1)"
     IO.inspect(opts)
     {:ok, journal} = File.open("journal", [:utf8, :write])
-    IO.puts "journal now opened; calling GenServer.start_link/2 with"
-    IO.inspect journal
+    IO.puts "journal opened; calling GenServer.start_link/2"
     GenServer.start_link(__MODULE__, journal, name: MS.Machine)
   end
                        
