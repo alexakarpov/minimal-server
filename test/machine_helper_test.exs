@@ -2,10 +2,6 @@ defmodule Machine.Helper.Tests do
   use ExUnit.Case
   import Mock
 
-  test "greets the world" do
-    assert Machine.Helper.foo == :bar
-  end
-
   test "message is built" do
     assert Machine.Helper.build_message("FooType", 42, "2018-something") == %{
       :type => "FooType",

@@ -9,10 +9,6 @@ defmodule Machine.Helper do
     Map.put(event_map, :recorded_at, time_now)
   end
 
-  def foo do
-    :baz
-  end
-
   def build_message(type, machine_id, event_time) do
     %{type: type,
       machine_id: machine_id,
