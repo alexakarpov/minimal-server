@@ -6,10 +6,9 @@ defmodule MinimalServer.Machine do
   ## Client API
 
   def start_link(opts) do
-    IO.puts "#{__MODULE__} ===> bootstrap (start_link/1)"
-    IO.inspect(opts)
+    Logger.debug opts
     {:ok, journal} = File.open("journal", [:utf8, :write])
-    IO.puts "journal opened; calling GenServer.start_link/2"
+    Logger.info "journal opened; calling GenServer.start_link/2"
     GenServer.start_link(__MODULE__, journal, name: MS.Machine)
   end
                        
