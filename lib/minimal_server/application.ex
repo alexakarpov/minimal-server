@@ -8,8 +8,7 @@ defmodule MinimalServer.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      {MinimalServer.Endpoint, name: MS.Endpoint},
-      Stack,
+      MinimalServer.Endpoint,
       MinimalServer.Machine
     ]
 
