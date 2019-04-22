@@ -1,4 +1,4 @@
-defmodule MS.Helper do
+defmodule Machine.Helper do
   require Timex
   require Logger
   require Poison
@@ -7,6 +7,10 @@ defmodule MS.Helper do
   def stamp(event_map) do
     {:ok, time_now} = Timex.format(Timex.now, "%Y-%m-%dT%H:%M:%S", :strftime)
     Map.put(event_map, :recorded_at, time_now)
+  end
+
+  def foo do
+    :baz
   end
 
   def build_message(type, machine_id, event_time) do

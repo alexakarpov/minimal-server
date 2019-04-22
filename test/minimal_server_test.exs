@@ -3,6 +3,7 @@ defmodule MinimalServerTest do
   doctest MinimalServer
 
   test "greets the world" do
+    IO.puts "is this even running? yes"
     assert MinimalServer.hello() == :world
   end
 end
