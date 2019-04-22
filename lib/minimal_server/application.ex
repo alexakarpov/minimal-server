@@ -9,17 +9,14 @@ defmodule MinimalServer.Application do
     # List all child processes to be supervised
     children = [
       {MinimalServer.Endpoint, name: MS.Endpoint},
-      Stack, # The same as {Stack, []}
+      Stack,
       MinimalServer.Machine
-      # Starts a worker by calling: MinimalServer.Worker.start_link(arg)
-      # {MinimalServer.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: MinimalServer.Supervisor]
-    # ok now that I have 2 children, what's making one fail?
-    IO.puts "#{__MODULE__} starting, getting up the children"
+    IO.puts "#{__MODULE__} starting, getting up the children: " <> inspect children
     IO.inspect children
     Supervisor.start_link(children, opts)
   end

@@ -11,11 +11,6 @@ defmodule MinimalServer.Endpoint do
 
   plug(:dispatch)
 
-  # this forward (nothing to do with 302) must precede the next clause, otherwise:
-  # warning: this clause cannot match because a previous clause at line 17 always matches
-  forward("/bot", to: MinimalServer.Router) # dependency
-  # .. but what if we had more than 1?
-
   post "/events" do
     IO.inspect conn
     %{"machine_id" => id, "time" => time} = conn.body_params
@@ -23,6 +18,19 @@ defmodule MinimalServer.Endpoint do
     send_resp(conn, 200, "POST success!")
   end
 
+  get "/" do
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Poison.encode!(message()))
+  end
+
+  defp message do
+    %{
+      time: DateTime.utc_now(),
+      msg: "Hello world"
+    }
+  end
+  
   match _ do
     send_resp(conn, 404, "Requested url not found!")
   end
