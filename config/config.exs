@@ -11,6 +11,8 @@ use Mix.Config
 # You can configure your application as:
 #
 #     config :minimal_server, key: :value
+
+config :minimal_server, rabbit_host: "mq.alexakarpov.xyz"
 #
 # and access this configuration in your application as:
 #
