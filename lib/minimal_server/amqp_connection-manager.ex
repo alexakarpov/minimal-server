@@ -6,23 +6,26 @@ defmodule AMQP.ConnectionManager do
   @host Application.get_env(:minimal_server, :rabbit_host)
   @reconnect_interval 10_000
 
-  def start_link(opts \\ [name: __MODULE__]) do
-    GenServer.start_link(__MODULE__, nil, opts)
+  def start_link(opts) do
+    GenServer.start_link(__MODULE__, nil, name: ConnMan)
   end
 
   def init(_) do
     send(self(), :connect)
+    Logger.warn (inspect self())
     {:ok, nil}
   end
 
   def get_connection do
-    case GenServer.call(__MODULE__, :get) do
+    Logger.debug "calling #{__MODULE__}'s :get"
+    case GenServer.call(ConnMan, :get) do
       nil -> {:error, :not_connected}
       conn -> {:ok, conn}
     end
   end
 
   def handle_call(:get, _, conn) do
+    Logger.debug("well?")
     {:reply, conn, conn}
   end
 
