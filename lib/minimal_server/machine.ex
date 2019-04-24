@@ -11,15 +11,6 @@ defmodule MinimalServer.Machine do
     Logger.info "journal opened; calling GenServer.start_link/2"
     GenServer.start_link(__MODULE__, journal, name: Machine.Machine)
   end
-                       
-  @doc """
-  Generates and fires a CycleComplete message with given fields.
-  """
-  def complete_cycle(machine_id, timestamp) do
-    GenServer.call(Machine.Machine, %{"machine_id" => machine_id,
-                                         "type" => "CycleComplete",
-                                         "timestamp" => timestamp})
-  end
 
   #Server Callbacks
 

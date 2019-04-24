@@ -11,10 +11,19 @@ defmodule MinimalServer.API do
 
   plug(:dispatch)
 
+  @doc """
+  Generates and fires a CycleComplete message with given fields.
+  """
+  def complete_cycle(machine_id, timestamp) do
+    GenServer.call(Machine.Machine, %{"machine_id" => machine_id,
+                                      "type" => "CycleComplete",
+                                      "timestamp" => timestamp})
+  end
+
   post "/events" do
     IO.inspect conn
     %{"machine_id" => id, "time" => time} = conn.body_params
-    MinimalServer.Machine.complete_cycle(id, time)
+    complete_cycle(id, time)
     send_resp(conn, 200, "POST success!")
   end
 
@@ -30,7 +39,7 @@ defmodule MinimalServer.API do
       msg: "Hello world"
     }
   end
-  
+
   match _ do
     send_resp(conn, 404, "Requested url not found!")
   end
