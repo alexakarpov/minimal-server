@@ -3,16 +3,14 @@ defmodule MinimalServer.Machine do
   require Logger
   require AtomicMap
 
-  ## Client API
-
   def start_link(opts) do
     Logger.debug opts
-    {:ok, journal} = File.open("journal", [:utf8, :write])
-    Logger.info "journal opened; calling GenServer.start_link/2"
-    GenServer.start_link(__MODULE__, journal, name: Machine.Machine)
+    {:ok, journal} = File.open("journal.log", [:utf8, :write])
+    Logger.info "journal opened; starting the MinimalServer.Machine"
+    GenServer.start_link(__MODULE__, journal, name: MachineCycles)
   end
 
-  #Server Callbacks
+  #Server callbacks
 
   @impl true
   def init(journal) do
