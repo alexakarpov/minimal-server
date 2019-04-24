@@ -12,7 +12,7 @@ use Mix.Config
 #
 #     config :minimal_server, key: :value
 
-config :minimal_server, rabbit_host: "mq.alexakarpov.xyz"
+config :minimal_server, rabbit_host: "amqp://mq.alexakarpov.xyz"
 #
 # and access this configuration in your application as:
 #
