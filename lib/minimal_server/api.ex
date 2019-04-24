@@ -15,9 +15,9 @@ defmodule MinimalServer.API do
   Generates and fires a CycleComplete message with given fields.
   """
   def complete_cycle(machine_id, timestamp) do
-    GenServer.call(Machine.Machine, %{"machine_id" => machine_id,
-                                      "type" => "CycleComplete",
-                                      "timestamp" => timestamp})
+    GenServer.call(MachineCycles, %{"machine_id" => machine_id,
+                              "type" => "CycleComplete",
+                              "timestamp" => timestamp})
   end
 
   post "/events" do
