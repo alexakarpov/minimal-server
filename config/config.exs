@@ -12,7 +12,13 @@ use Mix.Config
 #
 #     config :minimal_server, key: :value
 
-config :minimal_server, rabbit_host: "amqp://mq.alexakarpov.xyz"
+config :minimal_server, broker_url: ":9092"
+
+config :kaffe,
+  producer: [
+    endpoints: ["kafka.alexakarpov.xyz": 9092],
+    topics: ["events"]
+  ]
 #
 # and access this configuration in your application as:
 #

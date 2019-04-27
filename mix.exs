@@ -14,7 +14,7 @@ defmodule MinimalServer.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :amqp],
+      extra_applications: [:logger, :kaffe],
       mod: {MinimalServer.Application, []}
     ]
   end
@@ -22,7 +22,7 @@ defmodule MinimalServer.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:amqp, "~> 1.0"},
+      {:kaffe, "~> 1.9"},
       {:plug, "~> 1.6"},
       {:cowboy, "~> 2.4"},
       {:plug_cowboy, "~> 2.0"},

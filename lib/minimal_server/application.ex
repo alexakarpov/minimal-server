@@ -10,8 +10,7 @@ defmodule MinimalServer.Application do
     # List all child processes to be supervised
     children = [
       MinimalServer.API,
-      MinimalServer.Machine,
-      AMQP.ConnectionManager
+      MinimalServer.Machine
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
