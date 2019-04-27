@@ -19,28 +19,29 @@ defmodule Machine.Helper do
     AtomicMap.convert(event)
   end
 
-  # Writing to journal
-
-  @doc """
-  hm, if Kafka client for Elixir is also just an IODevice, this might work
-  """
+  # Writing to journal(s)
   def record_cycle_complete(journal, %{machine_id: machine_id,
                                        type: "CycleComplete",
                                        timestamp: ts}) do
     {:ok, event_to_write} = Poison.encode(stamp(build_message("MachineCycled", machine_id, ts)))
-    IO.puts(journal, event_to_write)
+    log_event(journal, event_to_write)
     {:ok, event_to_write}
   end
 
   def record_lapse(journal, lapse_type, machine_id) do
     {:ok, time_now} = Timex.format(Timex.now, "%Y-%m-%dT%H:%M:%S", :strftime)
     {:ok, event_to_write} = Poison.encode(stamp(build_message(lapse_type, machine_id, time_now)))
-    IO.puts(journal, event_to_write)
+    log_event(journal, event_to_write)
   end
 
   def record_new_machine(journal, machine_id, timestamp) do
     {:ok, event_to_write} = Poison.encode build_message("MachineStarted", machine_id, timestamp)
+    log_event(journal, event_to_write)
+  end
+
+  def log_event(journal, event_to_write) do
     IO.puts(journal, event_to_write)
+    Kaffe.Producer.produce_sync("random_key", event_to_write)
   end
 
   def set_or_reset_timer(machines, machine_id) do
