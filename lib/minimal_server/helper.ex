@@ -23,7 +23,11 @@ defmodule Machine.Helper do
   def record_cycle_complete(journal, %{machine_id: machine_id,
                                        type: "CycleComplete",
                                        timestamp: ts}) do
-    {:ok, event_to_write} = Poison.encode(stamp(build_message("MachineCycled", machine_id, ts)))
+    {:ok, event_to_write} =
+      build_message("MachineCycled", machine_id, ts)
+      |> stamp
+      |> Poison.encode
+
     log_event(journal, event_to_write)
     {:ok, event_to_write}
   end
@@ -48,6 +52,6 @@ defmodule Machine.Helper do
     unless (machines == %{} || machines[machine_id] == nil) do
       Process.cancel_timer(machines[machine_id])
     end
-    Map.put(machines, machine_id, Process.send_after(self(), {:late, machine_id}, 45_000))
+    Map.put(machines, machine_id, Process.send_after(self(), {:late, machine_id}, Application.get_env(:minimal_server, :productivity_timeout)))
   end
 end
