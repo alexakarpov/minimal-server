@@ -14,7 +14,6 @@ defmodule MinimalServer.Machine do
 
   @impl true
   def init(journal) do
-    IO.puts "#{__MODULE__} ===> INIT"
     {:ok, %{journal: journal,
             machines: %{}}}
   end
@@ -28,11 +27,11 @@ defmodule MinimalServer.Machine do
     # I find atoms to be better for map keys.
     event = AtomicMap.convert(event)
     Machine.Helper.record_cycle_complete(journal, event)
-    # Note: this will produce an entry for _all_ new machines - including the original one.
+    # this will produce an entry for _all_ new machines - including the original one.
     if state.machines[event.machine_id] == nil do
       Machine.Helper.record_new_machine(journal, event.machine_id, event.timestamp)
     end
-    # update our timers map, now that this guy did some work
+    # update our timers map
     new_machines = Machine.Helper.set_or_reset_timer(Map.get(state, :machines), m_id)
     {:reply, :ok, Map.put(state, :machines, new_machines)}
   end
@@ -47,7 +46,7 @@ defmodule MinimalServer.Machine do
   @impl GenServer
   def handle_info({:late, machine_id}, state=%{journal: journal, machines: _machines}) do
     Machine.Helper.record_lapse(journal, "NonProductionLimitReached", machine_id)
-    {:noreply, put_in(state, [:machines, machine_id], Process.send_after(self(), {:real_late, machine_id}, 15_000))}
+    {:noreply, put_in(state, [:machines, machine_id], Process.send_after(self(), {:real_late, machine_id}, Application.get_env(:minimal_server, :alarm_timeout)))}
   end
 
   # Log the alarm for the real_late timer's expiration.
@@ -56,6 +55,4 @@ defmodule MinimalServer.Machine do
     Machine.Helper.record_lapse(journal, "AlarmOpened", machine_id)
     {:noreply, state}
   end
-
-  IO.puts("#{__MODULE__} - RECOMPILED")
 end
