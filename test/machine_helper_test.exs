@@ -21,8 +21,8 @@ defmodule Machine.Helper.Tests do
   end
 
   test "CycleComplete messages are recorded" do
-    with_mock Timex, [format: fn(_,_,_) -> {:ok, "2018-lalala"} end,
-                      now: fn() -> :mock end] do
+    with_mock(Timex, [format: fn(_,_,_) -> {:ok, "2018-lalala"} end,
+                      now: fn() -> :mock end]) do
       message = %{machine_id: 12,
                   timestamp: "2018-01-01T11:22:33Z",
                   type: "CycleComplete"}
