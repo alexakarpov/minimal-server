@@ -12,13 +12,16 @@ use Mix.Config
 #
 #     config :minimal_server, key: :value
 
-config :minimal_server, broker_url: ":9092"
+config :minimal_server,
+  productivity_timeout: 15_000,
+  alarm_timeout: 5_000
 
 config :kaffe,
   producer: [
     endpoints: ["kafka.alexakarpov.xyz": 9092],
     topics: ["events"]
   ]
+
 #
 # and access this configuration in your application as:
 #
