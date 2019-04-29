@@ -38,3 +38,8 @@ the object of this format:
 "time":1544876}
 
 (timestamp is not really important though)
+
+see the logs written to journal.log, and run your own Kafka consumer on 'events' topic using the url from the config.exs, e.g.:
+```
+./bin/kafka-console-consumer.sh --bootstrap-server kafka.alexakarpov.xyz:9092 --topic events
+```
