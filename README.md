@@ -1,37 +1,5 @@
 # MinimalServer
 
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `minimal_server` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:minimal_server, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/minimal_server](https://hexdocs.pm/minimal_server).
-
-## Machine State Monitoring
-You’ll build a process/actor that will be sent a message using the mechanism below:
-
-### elixir
-```
-case GenServer.call(__MachineStateManager__, event) do
-  {:ok, recorded_event} ->
-    Logger.info(“recorded: “ <> inspect recorded_event)
-  {:error, e} ->
-    Logger.error(“error encountered:” <> inspect e)
-end
-```
-
 A CNC machine produces a part every 30 seconds. (You can see an example here to get an idea of what the process looks like: https://www.youtube.com/watch?v=RNPojGFg9-8) After the machine is done producing a part, an operator will come into the machine, remove the part, and load the machine with new raw materials.
 Your goal is to produce an application that receive events from machines as they complete parts (sent via a message to your actor/process as shown above). Your application will monitor their activity and log the activity to a journal. You will write events to a journal of your choosing (a file, a redis sorted set ranked by time, or a kafka topic.)
 
@@ -59,22 +27,14 @@ If the application has produced an alarm, when it receives a cycle, you should w
 
 # How to build/run this
 
-## Build
-**mix compile** (or just **mix test**)
+**iex -S mix**
 
-## Run
+now, make POST to:
+http://localhost:4000/events
 
-I simply used **iex -S mix** to run and play/test. *MS.Server* contains all the client API.
-The interaction in the *iex* went something like this (note I wrapped messages to the server in a simple function call, *complete_cycle* with 2 args, **machine_id** and **timestamp** (the second one isn't even typed).
+the object of this format:
 
-```
-iex(1)> MS.Server.start_server
-:ok
-iex(2)> MS.Server.complete_cycle(7,8765)
-{:ok,
- %{"event_time" => 8765, "machine_id" => 7,
-   "recorded_at" => "2018-01-20T03:18:56", "type" => "MachineCycled"}}
-iex(3)>
-22:19:41.075 [debug] timed out
-22:19:56.077 [info]  real late!
-```
+{"machine_id":"M2",
+"time":1544876}
+
+(timestamp is not really important though)
