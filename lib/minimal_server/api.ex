@@ -1,5 +1,5 @@
 defmodule MinimalServer.API do
-  use Plug.Router # same as Router module, lol
+  use Plug.Router
 
   plug(:match)
 
