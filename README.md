@@ -32,9 +32,13 @@ If the application has produced an alarm, when it receives a cycle, you should w
 now, make POST to:
 http://localhost:4000/events
 
-the object of this format:
-
-{"machine_id":"M2",
-"time":1544876}
-
+e.g.
+```
+curl -d '{"machine_id":"M1", "time":4321}' -H "Content-Type: application/json" -X POST http://localhost:4000/events
+```
 (timestamp is not really important though)
+
+see the logs written to journal.log, and run your own Kafka consumer on 'events' topic using the url from the config.exs, e.g.:
+```
+./bin/kafka-console-consumer.sh --bootstrap-server kafka.alexakarpov.xyz:9092 --topic events
+```
