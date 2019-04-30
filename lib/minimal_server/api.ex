@@ -22,8 +22,8 @@ defmodule MinimalServer.API do
 
   post "/events" do
     IO.inspect conn
-    %{"machine_id" => id, "time" => time} = conn.body_params
-    complete_cycle(id, time)
+    %{"machine_id" => id, "timestamp" => timestamp} = conn.body_params
+    complete_cycle(id, timestamp)
     send_resp(conn, 200, "POST success!")
   end
 
