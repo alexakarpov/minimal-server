@@ -1,9 +1,0 @@
-{:ok, connection} = AMQP.Connection.open host: "alexakarpov.xyz", port: 5672
-
-AMQP.Queue.declare(channel, "hello")
-
-{:ok, channel} = AMQP.Channel.open(connection)
-
-AMQP.Queue.declare(channel, "events")
-
-AMQP.Basic.publish(channel, "", "events", "Hello World!")
