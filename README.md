@@ -1,3 +1,5 @@
+A task from an interviewing process about an year ago. My first Elixir code; after, I've added Kafka log, REST API and supervision.
+
 # MinimalServer
 
 A CNC machine produces a part every 30 seconds. (You can see an example here to get an idea of what the process looks like: https://www.youtube.com/watch?v=RNPojGFg9-8) After the machine is done producing a part, an operator will come into the machine, remove the part, and load the machine with new raw materials.
