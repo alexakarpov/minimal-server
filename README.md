@@ -40,5 +40,5 @@ curl -d '{"machine_id":"M1", "time":4321}' -H "Content-Type: application/json" -
 
 see the logs written to journal.log, and run your own Kafka consumer on 'events' topic using the url from the config.exs, e.g.:
 ```
-./bin/kafka-console-consumer.sh --bootstrap-server kafka.alexakarpov.xyz:9092 --topic events
+./bin/kafka-console-consumer.sh --bootstrap-server kafka.alexakarpov.xyz:9092 --topic events --from-beginning
 ```
