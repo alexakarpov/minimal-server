@@ -34,6 +34,12 @@ defmodule MinimalServer.API do
     |> send_resp(200, Poison.encode!(message()))
   end
 
+  get "/hello" do
+    conn
+    |> put_resp_content_type("application/text")
+    |> send_resp(200, "world")
+  end
+
   defp message do
     %{
       time: DateTime.utc_now(),
