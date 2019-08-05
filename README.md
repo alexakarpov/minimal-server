@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/alexakarpov/minimal-server.svg?style=svg)](https://circleci.com/gh/alexakarpov/minimal-server)
+
 A task from an interviewing process about an year ago. My first Elixir code; after, I've added Kafka log, REST API and supervision.
 
 # MinimalServer
